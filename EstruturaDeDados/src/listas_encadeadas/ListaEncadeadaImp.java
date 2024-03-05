@@ -2,21 +2,20 @@ package listas_encadeadas;
 
 public class ListaEncadeadaImp<T> implements MyInterfaceList<T> {
 
-	class Node{
+	class Node {
 		Node proximo;
 		T data;
-		
-		 public Node(T data) 
-	        {        	
-	            this.data = data;    
-	            proximo = null;
-	        } 
+
+		public Node(T data) {
+			this.data = data;
+			proximo = null;
+		}
 	}
-	
+
 	private Node head;
 	private Node tail;
 	private int size;
-		
+
 	public ListaEncadeadaImp() {
 		this.head = null;
 		this.tail = null;
@@ -51,38 +50,96 @@ public class ListaEncadeadaImp<T> implements MyInterfaceList<T> {
 
 	@Override
 	public boolean addAfter(T dado, T crit) {
-		// TODO Auto-generated method stub
-		return false;
+		Node novo = new Node(dado);
+		Node referencia = searchNode(crit);
+		if (referencia == null) {
+			return false;
+		} else {
+			if (referencia.proximo == null) {
+				tail = novo;
+			}
+			novo.proximo = referencia.proximo;
+			referencia.proximo = novo;
+			size++;
+			return true;
+		}
 	}
 
 	@Override
 	public T peekFirst() {
-		// TODO Auto-generated method stub
-		return null;
+		if (head == null) {
+			System.out.println("Lista vazia!");
+			return null;
+		} else {
+			return head.data;
+		}
 	}
 
 	@Override
 	public T peekLast() {
-		// TODO Auto-generated method stub
+		if (head == null) {
+			System.out.println("Lista vazia!");
+			return null;
+		} else {
+			return tail.data;
+		}
+	}
+
+	public Node searchNode(T crit) {
+		Node p = head;
+		while (p != null) {
+			if (p.proximo.equals(crit)) {
+				return p;
+			}
+			p = p.proximo;
+		}
 		return null;
 	}
 
-	@Override
-	public T search(T crit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public T removeFirst() {
-		// TODO Auto-generated method stub
-		return null;
+		if (head == null) {
+			System.out.println("Fila vazia!");
+			return null;
+		} else {
+			Node dadoRemovido = head;
+			if (head == tail) {
+				head = null;
+				tail = null;
+			} else {
+				head = head.proximo;
+			}
+			size--;
+			return (T) dadoRemovido;
+		}
 	}
 
 	@Override
 	public T removeLast() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if (head == null) {
+			System.out.println("Lista vazia!");
+			return null;
+		} else {
+			if (head == tail) {
+				head = null;
+				tail = null;
+				size--;
+				return null;
+			} else {
+				Node ultimo = tail;
+				Node p = head;
+				while (p.proximo != tail.data){
+					p = p.proximo;
+				}
+				tail = p;
+				p.proximo = null;
+				size--;
+				return ultimo.data;
+			}
+			
+		}
 	}
 
 	@Override
@@ -94,14 +151,19 @@ public class ListaEncadeadaImp<T> implements MyInterfaceList<T> {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void showReverse() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
+
+	@Override
+	public T search(T crit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
